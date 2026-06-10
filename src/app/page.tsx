@@ -1,65 +1,52 @@
-import Image from "next/image";
+import { getSubscriberCount } from '@/app/actions';
+import EmailForm from '@/app/components/EmailForm';
 
-export default function Home() {
+export const dynamic = 'force-dynamic';
+
+export default async function Home() {
+  const count = await getSubscriberCount();
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center font-sans">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
+    <main className="min-h-screen flex flex-col items-center justify-center px-6 py-16">
+      {/* Logo / wordmark */}
+      <div className="mb-10 flex flex-col items-center gap-1">
+        <span className="text-5xl">🌿</span>
+        <span className="text-3xl font-extrabold tracking-tight text-slate-800">YardBoy</span>
+        <span className="text-xs font-semibold uppercase tracking-widest text-slate-500">Smart Yard Technology</span>
+      </div>
+
+      {/* Hero text */}
+      <div className="text-center max-w-xl mb-10">
+        <h1 className="text-4xl sm:text-5xl font-extrabold text-slate-800 leading-tight mb-4">
+          Your yard, finally{' '}
+          <span className="text-sky-600">working for you.</span>
+        </h1>
+        <p className="text-lg text-slate-600 leading-relaxed">
+          YardBoy is the AI-powered yard management platform that handles scheduling,
+          watering, mowing, and more — so you can spend less time outside working
+          and more time outside enjoying.
+        </p>
+      </div>
+
+      {/* Feature pills */}
+      <div className="flex flex-wrap justify-center gap-2 mb-10">
+        {['🤖 AI Scheduling', '💧 Smart Watering', '🌱 Plant Health', '📊 Yard Analytics'].map((f) => (
+          <span
+            key={f}
+            className="px-4 py-1.5 bg-white/70 border border-white/90 rounded-full text-sm font-medium text-slate-700 shadow-sm backdrop-blur-sm"
           >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+            {f}
+          </span>
+        ))}
+      </div>
+
+      {/* Email form + counter */}
+      <EmailForm initialCount={count} />
+
+      {/* Footer */}
+      <footer className="mt-16 text-center text-xs text-slate-400">
+        <p>© {new Date().getFullYear()} YardBoy, Inc. · Built with Next.js &amp; Neon</p>
+      </footer>
+    </main>
   );
 }
